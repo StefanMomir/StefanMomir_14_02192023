@@ -10,7 +10,7 @@
   "module": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/StefanMomir/StefanMomir_14_02192023"
+    "url": "https://github.com/StefanMomir/StefanMomir_14_02192023.git"
   },
   "scripts": {
     "start": "react-scripts start",
