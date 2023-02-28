@@ -1,18 +1,16 @@
-import React from "react";
 import PropTypes from "prop-types";
 import sortingTitle from "../data/sortingTable.js";
 import limit from "../data/limit.js";
 import { AuthUser } from "../context/Auth.jsx";
 import { useState, useEffect } from "react";
-import { NextPage } from "wh-p14-full";
-import { PreviousPage } from "wh-p14-full";
-import { Pagination } from "wh-p14-full";
-import { Order } from "wh-p14-full";
-import { Table } from "wh-p14-full";
-import { SearchByKey } from "wh-p14-full";
-import { DropdownLimit } from "wh-p14-full";
-import { PageStats } from "wh-p14-full";
-import TableData from "../components/tableData/TableData.jsx";
+import NextPage from "wh-p14-library";
+import PreviousPage from "wh-p14-library";
+import { Pagination } from "wh-p14-library2";
+import Order from "../components/order/Order.jsx";
+import Table from "../components/table/Table.jsx";
+import DropdownLimit from "../components/dropdowns/DropdownLimit.jsx";
+import SearchByKey from "../components/search/SearchByKey.jsx";
+import PageStats from "wh-p14-library";
 
 const Dashboard = () => {
   const {
@@ -61,7 +59,6 @@ const Dashboard = () => {
    * @param { Function } handleListAll: query database for all datas
    * @param { Function } setSortBy: set sort display by title of data fields
    * @param { Function } setOrder: set order by ASC or DESC
-   * @param { Function } TableData: customize Database data
    * @param { Number } maxPageLimit: max pagination number
    * @param { Number } minPageLimit: min pagination number
    * @param { Number } limitPageNumbers: limit number of pages
@@ -82,10 +79,10 @@ const Dashboard = () => {
     <div className="dashboard">
       <div className="title">
         <picture>
-          <source type="image/webp" srcSet="logoc.webp 46w" />
-          <img src="logoc.png" alt="logoc" />
+          <source type="image/webp" srcSet="logoc.webp" />
+          <img src="logoc.jpg" alt="logoc" />
         </picture>
-        <p>HRNet - Registered Employees List</p>
+        <p>Registered Employees List</p>
       </div>
       <div className="filter-container">
         <DropdownLimit
@@ -105,6 +102,7 @@ const Dashboard = () => {
           handleListAll={handleListAll}
           handleLimit={handleLimit}
         />
+        {/*
         <PreviousPage
           setMaxPageLimit={setMaxPageLimit}
           setMinPageLimit={setMinPageLimit}
@@ -134,11 +132,10 @@ const Dashboard = () => {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pages={pages}
-        />
+  />*/}
       </div>
       <div className="data">
         <Table
-          TableData={TableData}
           sortingTitle={sortingTitle}
           dataResult={dataResult}
           order={order}
@@ -154,15 +151,6 @@ const Dashboard = () => {
           currentPage={currentPage}
           resultsPerPage={resultsPerPage}
         />
-        <PreviousPage
-          setMaxPageLimit={setMaxPageLimit}
-          setMinPageLimit={setMinPageLimit}
-          maxPageLimit={maxPageLimit}
-          minPageLimit={minPageLimit}
-          limitPageNumbers={limitPageNumbers}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
         <div className="pages">
           <Pagination
             totalResults={totalResults}
@@ -174,16 +162,6 @@ const Dashboard = () => {
             pages={pages}
           />
         </div>
-        <NextPage
-          setMaxPageLimit={setMaxPageLimit}
-          setMinPageLimit={setMinPageLimit}
-          maxPageLimit={maxPageLimit}
-          minPageLimit={minPageLimit}
-          limitPageNumbers={limitPageNumbers}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          pages={pages}
-        />
       </div>
     </div>
   );

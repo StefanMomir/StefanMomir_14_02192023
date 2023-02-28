@@ -37,10 +37,10 @@ const Home = () => {
         <div className={showState === true ? "show" : "hide"}>
           <div className="title">
             <picture>
-              <source type="image/webp" srcSet="logoc.webp" />
-              <img src="logoc.jpg" alt="logoc" />
+              <source type="image/webp" srcSet="logoc.webp 216w" />
+              <img src="logo.png" srcSet="logoc.png 216w" alt="logoc" />
             </picture>
-            <p>Create Employee</p>
+            <p>HRNet - Create Employee</p>
           </div>
           <div className="main-form-set">
             <label htmlFor="">

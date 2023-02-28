@@ -1,61 +1,260 @@
 ![image](/client/src/assets/logo.png)
 
-# Getting Started
+# WH-P14-Full
 
-## Back End
+ATENTION ! THIS IS A SCHOOL PROJECT !
 
-### In the project directory of **BackEnd Api**(api), you can run:
+Search by keyword, Sort, Filter, Order, Pagination
 
-## `npm start`
+![image](/client/src/assets/example.png)
 
-Server will run at port **3001**
+## Installation
 
----
+The package can be installed via [npm](https://github.com/npm/cli):
 
-### Dependencies:
+```
+npm install wh-p14-full
+```
 
-You must run :
+Or via [yarn](https://github.com/yarnpkg/yarn):
 
-## `npm install`
+```
+yarn add wh-p14-full
+```
 
-for dependencies, in order the client to work !
+You can import one or all following features :
 
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "mysql": "^2.18.1",
-    "mysql2": "^3.0.1",
-    "nodemon": "^2.0.20",
-    "npm": "^9.4.1",
-    "router": "^1.3.7",
-    "sequelize": "^6.28.0",
-    "serve-static": "^1.15.0"
+```js
+import {
+  NextPage,
+  PreviousPage,
+  Pagination,
+  Order,
+  Table,
+  DropdownLimit,
+  SearchByKey,
+  PageStats,
+} from "wh-p14-full";
+```
 
----
+## Props description :
 
-<br>
+```js
+/** ALL PROPS **
 
-## Front End
+- @param { Function } setMaxPageLimit: set max. pagination numbers
+- @param { Function } setMinPageLimit: set min. pagination numbers
+- @param { Function } setCurrentPage: set current page
+- @param { Function } handleLimit: set page limit
+- @param { Function } handleReset: reset pages states
+- @param { Function } handleListAll: query database for all datas
+- @param { Function } setSortBy: set sort display by title of data fields
+- @param { Function } setOrder: set order by ASC or DESC
+- @param { Function } TableData: customize Database data
+- @param { Number } maxPageLimit: max pagination number
+- @param { Number } minPageLimit: min pagination number
+- @param { Number } limitPageNumbers: limit number of pages
+- @param { Number } currentPage: current page number
+- @param { Number } pages: result of how many pages will be listed
+- @param { Number } totalResults: total number of data results from database
+- @param { Number } resultsPerPage: results per page
+- @param { Object } limit: limit number selection array
+- @param { Object } settingsData: Database table for set up defaults : sortby, limit, pagination, pages
+- @param { Object } dataResult: Database table for users
+- @param { Object } sortingTitle: titles array for sorting buttons
+- @param { String } order: return value : asc or desc
+- @param { String } sortBy: return value from titles sorting array buttons
+**/
+```
 
-### In the project directory of **FrontEnd App**(client), you can run:
+&nbsp;
 
-## `npm start`
+# { Table }
 
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Configuration Example
 
----
+&nbsp;
 
-### Dependencies:
+1 - Sorting Buttons Array
 
-You must run :
+2 - Database fields(MYSQL,SQLite...)
 
-## `npm install`
+&nbsp;
 
-for dependencies, in order the client to work !
+| 1   | USER ID | FIRST NAME | LAST NAME | BIRTHDATE | START DATE | DEPARTMENT | STREET | CITY | STATE | ZIP |
+| --- | :------ | ---------- | --------- | --------- | ---------- | ---------- | ------ | ---- | ----- | --: |
+| 2   | id      | firstname  | lastname  | createdAt | department | birthdate  | street | city | state | zip |
 
-    "@fontsource/roboto": "^4.5.8",
-    "@mui/icons-material": "^5.11.0",
-    "axios": "^1.2.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.0",
-    "react-scripts": "^5.0.1"
+<p>&nbsp;</p>
+
+example :
+
+create a filename : `TableData.jsx` and paste de following code :
+
+```js
+export const TableData = ({ ...props }) => {
+  return (
+    <div className="data-container">
+      <div className="data-title">{props.mainData.id}</div>
+      <div className="data-title weight capitalize">
+        {props.mainData.firstname}
+      </div>
+      <div className="data-title weight">{props.mainData.lastname}</div>
+      <div className="data-title">{props.mainData.createdAt}</div>
+      <div className="data-title">{props.mainData.department}</div>
+      <div className="data-title">{props.mainData.birthdate}</div>
+      <div className="data-title">{props.mainData.street}</div>
+      <div className="data-title">{props.mainData.city}</div>
+      <div className="data-title">{props.mainData.state}</div>
+      <div className="data-title">{props.mainData.zip}</div>
+    </div>
+  );
+};
+```
+
+create a filename : `sortingTable.js` and paste de following code :
+
+```js
+const sortingTitle = [
+  {
+    title: "User ID",
+    name: "id",
+  },
+  {
+    title: "First Name",
+    name: "firstname",
+  },
+  {
+    title: "Last Name",
+    name: "lastname",
+  },
+  {
+    title: "Start Date",
+    name: "createdAt",
+  },
+  {
+    title: "Departement",
+    name: "department",
+  },
+  {
+    title: "Birthdate",
+    name: "birthdate",
+  },
+  {
+    title: "Street",
+    name: "street",
+  },
+  {
+    title: "City",
+    name: "city",
+  },
+  {
+    title: "State",
+    name: "state",
+  },
+  {
+    title: "Zip Code",
+    name: "zip",
+  },
+];
+```
+
+Table {...props}
+
+```js
+import { TableData } from "TableData.jsx";
+
+<div className="data">
+  <Table
+    TableData={TableData}
+    sortingTitle={sortingTitle}
+    dataResult={dataResult}
+    order={order}
+    sortBy={sortBy}
+    setSortBy={setSortBy}
+    currentPage={currentPage}
+    resultsPerPage={resultsPerPage}
+  />
+</div>;
+```
+
+<p>&nbsp;</p>
+
+# { NextPage, PreviousPage, Pagination, Order, PageStats }
+
+Configuration Example
+
+```js
+<div className="pagination">
+  <Order
+    setOrder="{setOrder}"
+    order="{order}"
+    handleListAll="{handleListAll}"
+    handleLimit="{handleLimit}"
+  />
+  <PreviousPage
+    setMaxPageLimit="{setMaxPageLimit}"
+    setMinPageLimit="{setMinPageLimit}"
+    maxPageLimit="{maxPageLimit}"
+    minPageLimit="{minPageLimit}"
+    limitPageNumbers="{limitPageNumbers}"
+    currentPage="{currentPage}"
+    setCurrentPage="{setCurrentPage}"
+  />
+  <div className="pages">
+    <Pagination
+      totalResults="{totalResults}"
+      resultsPerPage="{resultsPerPage}"
+      maxPageLimit="{maxPageLimit}"
+      minPageLimit="{minPageLimit}"
+      currentPage="{currentPage}"
+      setCurrentPage="{setCurrentPage}"
+      pages="{pages}"
+    />
+  </div>
+  <NextPage
+    setMaxPageLimit="{setMaxPageLimit}"
+    setMinPageLimit="{setMinPageLimit}"
+    maxPageLimit="{maxPageLimit}"
+    minPageLimit="{minPageLimit}"
+    limitPageNumbers="{limitPageNumbers}"
+    currentPage="{currentPage}"
+    setCurrentPage="{setCurrentPage}"
+    pages="{pages}"
+  />
+</div>
+```
+
+<p>&nbsp;</p>
+
+# { DropdownLimit, SearchByKey }
+
+Configuration Example
+
+<i>{handleFindKeyword} - value from input field</i>
+
+```js
+<div className="filter-container">
+  <DropdownLimit
+    limitData={limit}
+    handleLimit={handleLimit}
+    handleReset={handleReset}
+    totalResults={totalResults}
+    resultsPerPage={resultsPerPage}
+    settingsData={settingsData}
+  />
+  <SearchByKey handleFindKeyword={handleFindKeyword} />
+</div>
+```
+
+<p>&nbsp;</p>
+
+### Browser Support
+
+Compatible with the latest versions of Chrome and Firefox.
+
+<p>&nbsp;</p>
+
+## Credits
+
+2023 - OCMStefan
